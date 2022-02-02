@@ -8,8 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
@@ -86,6 +87,25 @@ public class Controller implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		resulText.textProperty().bind(calculator.pantallaProperty());
+
+		// estilos
+		MenuItem mClasico = new MenuItem("Estilo clasico");
+		mClasico.setOnAction(e -> {
+			view.getStylesheets().clear();
+			view.getStylesheets().add(getClass().getResource("/css/clasico.css").toExternalForm());
+		});
+
+		MenuItem mModerno = new MenuItem("Estilo moderno");
+		mModerno.setOnAction(e -> {
+			view.getStylesheets().clear();
+			view.getStylesheets().add(getClass().getResource("/css/moderno.css").toExternalForm());
+		});
+
+		ContextMenu elegirEstilo = new ContextMenu(mClasico, mModerno);
+		view.setOnContextMenuRequested(e -> {
+			elegirEstilo.show(view, e.getScreenX(),e.getScreenY());
+		});
+
 	}
 
 	public GridPane getView() {
